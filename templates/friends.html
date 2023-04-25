@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/styles/base.css' %}">
+    <title>MoodTracker - Друзья</title>
+</head>
+<body>
+
+<header>
+    <div class="header-top">
+        <div class="logo">
+            <img class="logo-header svg-white" src="{% static 'img/logo_moodtracker_white.svg' %}" alt="logo">
+        </div>
+    </div>
+    <div class="header-bottom">
+        <nav>
+            <ul>
+                <li><a href="/tracker">Трекер</a></li>
+                <li>
+                    <a href="/friends" style="color: black">Друзья</a>
+                    <hr class="ref-underline">
+                </li>
+                <li><a href="/profile">Профиль</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+<div class="container">
+
+    <div class="content-block">
+        <h2>Ваш ID</h2>
+        <div class="outline-rectangle">{{ user_id }}</div>
+        <p class="desc-centred">Используйте ID, чтобы добавлять людей
+            <br/>
+            в список друзей</p>
+    </div>
+
+    <form class="form add-friend-form">
+        <h2 style="margin-bottom: 30px">Добавить друга</h2>
+        <div class="input-group">
+            <input id="friend-id-input" name="friend-id-input" required spellcheck="false">
+            <span class="floating-label">ID друга</span>
+            <div class="with-icon-label invisible" style="margin-top: 6px;">
+                <img src="{% static 'img/warning_red.svg' %}" class="label-icon">
+                <p class="label-text" style="color: red; margin-left: 4px;">
+                    {{ add_friend_error }}</p>
+            </div>
+        </div>
+        <button type="submit" class="button primary-button">Добавить</button>
+    </form>
+
+    <div class="content-block">
+        <h2>Список друзей</h2>
+
+        <div class="user-list">
+            {% for friend in friends %}
+                <a href="/friends/some_friend">
+                    <div class="user-group">
+                        <div class="user-info">
+                            <img class="user-image" src="{{ friend.image_ref }}">
+                            <div class="left-aligned-text">
+                                <h4>{{ friend.name }} {{ friend.surname }}</h4>
+                                <p class="minor-text">{{ friend.login }}</p>
+                            </div>
+                        </div>
+                        <img class="icon" src="{% static 'img/angle_right_black.svg' %}" style=" width: 16px;"
+                             alt="go_to_icon">
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+</body>
+</html>

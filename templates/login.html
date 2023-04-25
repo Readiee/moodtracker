@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/login_page.css' %}">
+    <title>Вход MoodTracker</title>
+</head>
+
+<body>
+<div class="container">
+    <img class="logo-header" src="{% static 'img/logo_moodtracker.svg' %}" alt="logo">
+
+    <form class="form login-form">
+        <h2 style="margin: 40px 0">Вход MoodTracker</h2>
+        <div class="input-group">
+            <input type="text" id="login" name="login" class="input-field" required spellcheck="false">
+            <span class="floating-label">Логин</span>
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" name="password" required spellcheck="false">
+            <span class="floating-label">Пароль</span>
+        </div>
+        <button type="submit" class="button primary-button">Войти</button>
+
+        <div class="text-between-lines">
+            <hr>
+            <p class="minor-text" style="white-space: nowrap; margin: 20px">Нет аккаунта?</p>
+            <hr>
+        </div>
+
+        <a href="/registration" style="display: block; width: 100%">
+            <button type="button" class="secondary-button">Зарегистрироваться</button>
+        </a>
+
+    </form>
+</div>
+
+<script src="/static/libs/jquery/jquery-3.6.4.min.js"></script>
+<script src="/js/profile_page.js"></script>
+
+
+</body>

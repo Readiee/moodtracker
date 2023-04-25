@@ -1,0 +1,429 @@
+@primary-color: #1E1E1E;
+@secondary-color: #fff;
+@thirdly-color: #E9E9E9;
+@non-active-color: #a1a1a1;
+@font-family: Montserrat;
+@font-size: 14px;
+@max-width: 600px;
+@box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.20);
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  font-family: @font-family;
+}
+
+body {
+  background-color: @secondary-color;
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: @font-family;
+  font-weight: 400;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 42px 16px;
+
+  > *:not(:first-child) {
+    margin-top: 50px;
+  }
+}
+
+.logo-header {
+  width: 80px;
+}
+
+label {
+  font-size: 12px;
+}
+
+button {
+  max-width: @max-width;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: @primary-color;
+  color: @secondary-color;
+  font-family: @font-family;
+  font-size: @font-size;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button > *:not(:first-child) {
+  margin-left: 10px; //interval between block's items
+}
+
+.form {
+  max-width: @max-width;
+  width: 100%;
+  background-color: @secondary-color;
+  border-radius: 5px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 20px;
+  color: @primary-color;
+}
+
+a {
+  text-decoration: none;
+}
+
+.input-group {
+  width: 100%;
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+input {
+  max-width: @max-width;
+  width: 100%;
+  height: 56px;
+  display: block;
+  padding: 0 16px;
+  border: 2px solid @non-active-color;
+  border-radius: 5px;
+  font-size: 18px;
+  color: @primary-color;
+  background-color: @secondary-color;
+  font-weight: 500;
+}
+
+.floating-label {
+  color: @non-active-color;
+  position: absolute;
+  background-color: @secondary-color;
+  padding: 2px 6px;
+  pointer-events: none;
+  left: 10px;
+  top: 15px;
+  transition: 0.1s ease all;
+}
+
+.label-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 2px;
+}
+
+.label-text {
+  font-size: 12px;
+}
+
+.with-icon-label {
+  display: flex;
+  align-items: center;
+}
+
+.invisible {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+input:focus ~ .floating-label,
+input:not(:focus):valid ~ .floating-label {
+  margin: -9px 0;
+  color: @primary-color;
+  left: 8px;
+  top: 0;
+  bottom: 100px;
+  font-size: 12px;
+  opacity: 1;
+}
+
+hr {
+  margin: 20px 0;
+  border: 1px solid @non-active-color;
+}
+
+.text-between-lines {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  hr {
+    width: 50%;
+    height: 1px;
+    background: @non-active-color;
+    margin: 0;
+  }
+}
+
+.minor-text {
+  color: @non-active-color;
+  font-size: 14px;
+}
+
+#login {
+  font-size: 16px;
+}
+
+.secondary-button {
+  border: 2px solid @primary-color;
+  background-color: transparent;
+  color: @primary-color;
+}
+
+.thirdly-button {
+  background-color: @thirdly-color;
+  color: @primary-color;
+}
+
+.exit-button {
+  background-color: #FF4C4C;
+  color: @secondary-color
+}
+
+header {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid @non-active-color;
+}
+
+.header-top {
+  background-color: @primary-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.logo img {
+  max-width: 200px;
+}
+
+.header-bottom {
+  color: gray;
+  background-color: @secondary-color;
+  text-align: center;
+  padding: 0;
+}
+
+.header-bottom a {
+  color: gray;
+  font-weight: 500;
+}
+
+nav {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    position: relative;
+    display: inline-block;
+    margin: 0 10px;
+    height: 100%;
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    padding: 14px;
+    border-radius: 5px;
+  }
+
+  a:hover {
+    background-color: #fff;
+    color: @primary-color;
+  }
+}
+
+.ref-underline {
+  margin: 0;
+  position: absolute;
+  border: solid 1px @primary-color;
+  bottom: initial;
+  width: 100%;
+}
+
+.content-block {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  > *:not(:first-child) {
+    margin-top: 20px; //interval between block's items
+  }
+
+  > ul:not(:first-child) {
+    margin-top: 20px; //interval between list's items
+  }
+}
+
+.desc-centred {
+  font-size: 14px;
+  text-align: center;
+  color: @non-active-color;
+}
+
+.icon {
+  width: 20px;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-list {
+  a {
+    display: block;
+  }
+
+  width: 100%;
+
+  > *:not(:first-child) {
+    margin-top: 10px;
+  }
+}
+
+.post {
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: @box-shadow;
+  padding: 12px;
+}
+
+.post-header {
+  height: auto;
+}
+
+.post-info-group {
+  width: auto;
+  display: flex;
+  align-items: center;
+
+  > *:not(:first-child) {
+    margin-left: 10px;
+  }
+}
+
+.left-aligned-text > *:not(:first-child) {
+  margin-top: 2px;
+}
+
+.icon-smile {
+  width: 36px;
+}
+
+.icon-button {
+  height: auto;
+  width: auto;
+  background-color: transparent;
+  padding: 0;
+}
+
+.post-image {
+  width: 100%;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.outline-rectangle {
+  display: block;
+  width: fit-content;
+  padding: 16px;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 5px;
+  border: 2px solid @primary-color;
+}
+
+.user-list {
+  .post-list
+}
+
+.user-group {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  box-shadow: @box-shadow;
+  padding: 16px;
+
+  color: @primary-color;
+}
+
+.user-info {
+  .post-info-group;
+
+  > *:not(:first-child) {
+    margin-left: 16px;
+  }
+}
+
+.user-image {
+  width: 46px;
+  height: 46px;
+  border-radius: 100%;
+}
+
+.user-group {
+
+  label {
+
+  }
+
+  .display-image {
+    object-fit: cover;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+  }
+
+  input {
+    display: none;
+    position: absolute;
+    z-index: -1;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.inactive {
+  opacity: 0.5;
+}
+
+
+
+
+
+
+
