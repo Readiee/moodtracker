@@ -1,81 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    {% load static %}
-    <link rel="stylesheet" href="{% static '/styles/profile.css' %}">
-    <title>MoodTracker - Профиль</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
+	{% load static %}
+	<link rel="stylesheet" href="{% static '/styles/profile.css' %}">
+	<title>MoodTracker - Профиль</title>
 </head>
 
 <body>
 <header>
-    <div class="header-top">
-        <div class="logo">
-            <img class="logo-header svg-white" src="{% static 'img/logo_moodtracker_white.svg' %}" alt="logo">
-        </div>
-    </div>
-    <div class="header-bottom">
-        <nav>
-            <ul>
-                <li><a href="/tracker">Трекер</a></li>
-                <li><a href="/friends">Друзья</a></li>
-                <li>
-                    <a href="/profile" style="color: black">Профиль</a>
-                    <hr class="ref-underline">
-                </li>
-            </ul>
-        </nav>
-    </div>
+	<div class="header-top">
+		<div class="logo">
+			<img class="logo-header svg-white" src="{% static 'img/logo_moodtracker_white.svg' %}" alt="logo">
+		</div>
+	</div>
+	<div class="header-bottom">
+		<nav>
+			<ul>
+				<li><a href="{% url 'tracker' %}">Трекер</a></li>
+				<li><a href="{% url 'friends' %}">Друзья</a></li>
+				<li>
+					<a href="{% url 'profile' %}" style="color: black">Профиль</a>
+					<hr class="ref-underline">
+				</li>
+			</ul>
+		</nav>
+	</div>
 </header>
 
 <div class="container">
-    <form class="form edit-profile-form">
+	<form class="form edit-profile-form" action="{% url 'profile' %}" method="post">
+		{% csrf_token %}
+		<div class="user-group">
+			<div class="user-info">
+				<label for="load-user-image">
+					<img src="{{ request.user.avatar.url }}" alt="image-preview" class="display-image">
+				</label>
+				<input type="file" id="load-user-image" class="image-input"
+				       accept="image/jpeg, image/png, image/jpg">
 
-        <div class="user-group">
-            <div class="user-info">
-                <label for="load-user-image">
-                    <img src="{{ user.image_ref }}" alt="image-preview" class="display-image">
-                </label>
-                <input type="file" id="load-user-image" class="image-input"
-                       accept="image/jpeg, image/png, image/jpg">
+				<div class="left-aligned-text">
+					<h3 id="fullname">{{ request.user.first_name }} {{ request.user.last_name }}</h3>
+					<p id="login" class="minor-text">{{ request.user.login }}</p>
+				</div>
+			</div>
+		</div>
 
-                <div class="left-aligned-text">
-                    <h3 id="fullname">{{ user.name }} {{ user.surname }}</h3>
-                    <p id="login" class="minor-text">{{ user.login }}</p>
-                </div>
-            </div>
-        </div>
+		<h2 style="margin: 40px 0 30px">Редактировать профиль</h2>
 
-        <h2 style="margin: 40px 0 30px">Редактировать профиль</h2>
+		<div class="input-group">
+			{{ form.first_name }}
+			<span class="floating-label">Имя</span>
+		</div>
 
-        <div class="input-group">
-            <input type="text" id="name-input" name="name" class="input-field" required spellcheck="false"
-                   value="{{ user.name }}">
-            <span class="floating-label">Имя</span>
-        </div>
+		<div class="input-group">
+			{{ form.last_name }}
+			<span class="floating-label">Фамилия</span>
+		</div>
 
-        <div class="input-group">
-            <input type="text" id="surname-input" name="surname" class="input-field" required spellcheck="false"
-                   value="{{ user.surname }}">
-            <span class="floating-label">Фамилия</span>
-        </div>
+		<div class="input-group">
+			{{ form.login }}
+			<span class="floating-label">Логин</span>
+		</div>
+		{{ form.password.as_hidden }}
 
-        <div class="input-group">
-            <input type="text" id="login-input" name="login" class="input-field" required spellcheck="false"
-                   value="{{ user.login }}">
-            <span class="floating-label">Логин</span>
-        </div>
+		<button id='save-button' type="submit" class="button primary-button inactive" disabled="disabled">Сохранить
+		</button>
 
-        <button id='save-button' type="submit" class="button primary-button inactive" disabled="disabled">Сохранить
-        </button>
+		<hr>
 
-        <hr>
-
-        <a href="/" style="display: block; width: 100%">
-            <button type="button" class="exit-button">Выйти</button>
-        </a>
-    </form>
+	</form>
+	<a href="{% url 'logout' %}" style="display: block; width: 100%">
+		<button type="button" class="exit-button">Выйти</button>
+	</a>
 </div>
 
 <script type="text/javascript" src={% static '/js/profile_page.js' %}></script>

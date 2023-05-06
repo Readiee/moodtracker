@@ -1,94 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    {% load static %}
-    <link rel="stylesheet" href="{% static '/styles/base.css' %}">
-    <title>MoodTracker - Котик Милашкин</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
+	{% load static %}
+	<link rel="stylesheet" href="{% static '/styles/base.css' %}">
+	<title>MoodTracker - {{ request.user.get_full_name }}</title>
 </head>
 
 <body>
 <header>
-    <div class="header-top">
-        <div class="logo">
-            <img class="logo-header svg-white" src="{% static 'img/logo_moodtracker_white.svg' %}" alt="logo">
-        </div>
-    </div>
-    <div class="header-bottom">
-        <nav>
-            <ul>
-                <li><a href="/tracker">Трекер</a></li>
-                <li>
-                    <a href="/friends" style="color: black">Друзья</a>
-                    <hr class="ref-underline">
-                </li>
-                <li><a href="/profile">Профиль</a></li>
-            </ul>
-        </nav>
-    </div>
+	<div class="header-top">
+		<div class="logo">
+			<img class="logo-header svg-white" src="{% static 'img/logo_moodtracker_white.svg' %}" alt="logo">
+		</div>
+	</div>
+	<div class="header-bottom">
+		<nav>
+			<ul>
+				<li><a href="{% url 'tracker' %}">Трекер</a></li>
+				<li>
+					<a href="{% url 'friends' %}" style="color: black">Друзья</a>
+					<hr class="ref-underline">
+				</li>
+				<li><a href="{% url 'profile' %}">Профиль</a></li>
+			</ul>
+		</nav>
+	</div>
 </header>
 
 <div class="container">
-    <div class="content-block">
+	<div class="content-block">
 
-        <div class="user-group">
-            <div class="user-info">
-                <img src="{% static 'img/default_image.png' %}" alt="user-image" class="display-image">
-                <div class="left-aligned-text">
-                    <h3 id="fullname">Котик Милашкин</h3>
-                    <p id="login" class="minor-text">cat1337</p>
-                </div>
-            </div>
-        </div>
+		<div class="user-group">
+			<div class="user-info">
+				<img src="{{ friend.avatar.url }}" alt="user-image" class="display-image">
+				<div class="left-aligned-text">
+					<h3 id="fullname">{{ friend.get_full_name }}</h3>
+					<p id="login" class="minor-text">{{ friend.login }}</p>
+				</div>
+			</div>
+		</div>
 
-        <button type="button" class="button primary-button">
-            <img class="icon" src="{% static 'img/remove_user.svg' %}" alt="camera_icon">
-            <span>Удалить из друзей</span>
-        </button>
-    </div>
+		<a href="{% url 'delete_friend' friend.id %}">
+			<button type="button" class="button primary-button">
+				<img class="icon" src="{% static 'img/remove_user.svg' %}" alt="camera_icon">
+				<span>Удалить из друзей</span>
+			</button>
+		</a>
+	</div>
 
-    <div class="content-block">
-        <h2>История настроений</h2>
+	<div class="content-block">
+		<h2>История настроений</h2>
+		{% if trackers %}
+			<div class="post-list">
+				{% for tracker in trackers %}
+					<div class="post">
+						<div class="post-header space-between">
+							<div class="post-info-group">
+								<img class="icon-smile" src="{% static 'img/smiles/fear_smile_black.svg' %}"
+								     alt="fear_smile_icon">
+								<div class="left-aligned-text">
+									<h4>{{ tracker.mood }}</h4>
+									<p class="minor-text">{{ tracker.date_create }}</p>
+								</div>
+							</div>
+						</div>
+						<img class="post-image" src="{{ tracker.image.url }}" alt="post_image">
+					</div>
 
-        <div class="post-list">
-            <div class="post">
-                <div class="post-header space-between">
-                    <div class="post-info-group">
-                        <img class="icon-smile" src="{% static 'img/smiles/fear_smile_black.svg' %}"
-                             alt="fear_smile_icon">
-                        <div class="left-aligned-text">
-                            <h4>Страх</h4>
-                            <p class="minor-text">14 апр 21:04</p>
-                        </div>
-                    </div>
-                    <button type="button" class="icon-button">
-                        <img class="icon" src="{% static 'img/cross_black.svg' %}"
-                             alt="remove_icon">
-                    </button>
-                </div>
-                <img class="post-image" src="{% static 'img/smiles/fear_photo.png' %}" alt="post_image">
-            </div>
-            <div class="post">
-                <div class="post-header space-between">
-                    <div class="post-info-group">
-                        <img class="icon-smile" src="{% static 'img/smiles/fear_smile_black.svg' %}"
-                             alt="fear_smile_icon">
-                        <div class="left-aligned-text">
-                            <h4>Страх</h4>
-                            <p class="minor-text">14 апр 21:04</p>
-                        </div>
-                    </div>
-                    <button type="button" class="icon-button">
-                        <img class="icon" src="{% static 'img/cross_black.svg' %}"
-                             alt="remove_icon">
-                    </button>
-                </div>
-                <img class="post-image" src="{% static 'img/smiles/fear_photo.png' %}" alt="post_image">
-            </div>
-        </div>
+				{% endfor %}
+			</div>
+		{% else %}
+			<h4>{{ friend.first_name }} пока ничего не выложила</h4>
+		{% endif %}
 
-    </div>
+	</div>
 
 </div>
 </body>

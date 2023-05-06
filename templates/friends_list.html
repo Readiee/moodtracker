@@ -1,0 +1,17 @@
+{% load static %}
+<div class="error" hidden="">{{ message }}</div>
+{% for friend in friends %}
+	<a href="{% url 'friend' friend.friend.id %}">
+		<div class="user-group">
+			<div class="user-info">
+				<img class="user-image" src="{{ friend.friend.avatar.url }}"/>
+				<div class="left-aligned-text">
+					<h4>{{ friend.friend.first_name }} {{ friend.friend.last_name }}</h4>
+					<p class="minor-text">{{ friend.friend.login }}</p>
+				</div>
+			</div>
+			<img class="icon" src="{% static '/img/angle_right_black.svg' %}" style=" width: 16px;"
+			     alt="go_to_icon"/>
+		</div>
+	</a>
+{% endfor %}

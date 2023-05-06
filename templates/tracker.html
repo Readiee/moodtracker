@@ -1,72 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    {% load static %}
-    <link rel="stylesheet" href="{% static '/styles/base.css' %}">
-    <title>MoodTracker - Трекер</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
+	{% load static %}
+	<link rel="stylesheet" href="{% static '/styles/base.css' %}">
+	<title>MoodTracker - Трекер</title>
+	<style>
+      input[type='file'] {
+          opacity: 0;
+          width: 0;
+          height: 0;
+          position: absolute;
+      }
+	</style>
 </head>
 
 <body>
 <header>
-    <div class="header-top">
-        <div class="logo">
-            <img class="logo-header svg-white" src="{% static 'img/logo_moodtracker_white.svg' %}" alt="logo">
-        </div>
-    </div>
-    <div class="header-bottom">
-        <nav>
-            <ul>
-                <li>
-                    <a href="/tracker" style="color: black">Трекер</a>
-                    <hr class="ref-underline">
-                </li>
-                <li><a href="/friends">Друзья</a></li>
-                <li><a href="/profile">Профиль</a></li>
-            </ul>
-        </nav>
-    </div>
+	<div class="header-top">
+		<div class="logo">
+			<img class="logo-header svg-white" src="{% static 'img/logo_moodtracker_white.svg' %}" alt="logo">
+		</div>
+	</div>
+	<div class="header-bottom">
+		<nav>
+			<ul>
+				<li>
+					<a href="{% url 'tracker' %}" style="color: black">Трекер</a>
+					<hr class="ref-underline">
+				</li>
+				<li><a href="{% url 'friends' %}">Друзья</a></li>
+				<li><a href="{% url 'profile' %}">Профиль</a></li>
+			</ul>
+		</nav>
+	</div>
 </header>
 
 <div class="container">
-    <div class="content-block">
-        <h2>Трекер настроения</h2>
-        <p class="desc-centred">Загрузите фотографию с Вашим лицом
-            <br/>
-            и нейросеть определит Ваше настроение</p>
-        <button type="button" class="button primary-button">
-            <img class="icon" src="{% static 'img/camera_white.svg' %}" alt="camera_icon" style="margin-top: -2px;">
-            <span>Загрузить фото</span>
-        </button>
-    </div>
+	<form action="{% url 'tracker' %}" id="tracker_form" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="content-block">
+			<h2>Трекер настроения</h2>
+			<p class="desc-centred">Загрузите фотографию с Вашим лицом
+				<br/>
+				и нейросеть определит Ваше настроение</p>
+			<label for="{{ form.image.id_for_label }}">
+				<div class="button primary-button">
+					<img class="icon" src="{% static 'img/camera_white.svg' %}" alt="camera_icon" style="margin-top: -2px;">
+					<span>Загрузить фото</span>
+				</div>
+				{{ form.image }}
+			</label>
+			{% if message %}
+				<div id="error_addition" class="with-icon-label" style="margin-top: 6px;">
+					<img src="{% static 'img/warning_red.svg' %}" class="label-icon" alt=""/>
+					<p class="label-text" style="color: red; margin-left: 4px;">
+						{{ message|default_if_none:'' }}</p>
+				</div>
+			{% endif %}
+		</div>
+	</form>
 
-    <div class="content-block">
-        <h2>История Ваших настроений</h2>
+	<div class="content-block">
+		<h2>История Ваших настроений</h2>
 
-        <div class="post-list">
-            {% for post in posts %}
-                <div class="post">
-                    <div class="post-header space-between">
-                        <div class="post-info-group">
-                            <img class="icon-smile" src="{{ post.smile_ref }}" alt="smile-icon">
-                            <div class="left-aligned-text">
-                                <h4>{{ post.mood }}</h4>
-                                <p class="minor-text">{{ post.date }}</p>
-                            </div>
-                        </div>
-                        <button type="button" class="icon-button">
-                            <img class="icon" src="{% static 'img/cross_black.svg' %}"
-                                 alt="remove_icon">
-                        </button>
-                    </div>
-                    <img class="post-image" src="{{ post.image_ref }}" alt="post_image">
-                </div>
-            {% endfor %}
-        </div>
+		{% if trackers %}
+			<div class="post-list">
+				{% for tracker in trackers %}
+					<div class="post">
+						<div class="post-header space-between">
+							<div class="post-info-group">
+								<img class="icon-smile" src="{{ tracker.user.avatar.url }}" alt="smile-icon">
+								<div class="left-aligned-text">
+									<h4>{{ tracker.mood }}</h4>
+									<p class="minor-text">{{ tracker.date_create }}</p>
+								</div>
+							</div>
+							<a href="{% url 'delete_tracker' tracker.id %}">
+								<button type="button" class="icon-button">
+									<img class="icon" src="{% static 'img/cross_black.svg' %}"
+									     alt="remove_icon">
+								</button>
+							</a>
+						</div>
+						<img class="post-image" src="{{ tracker.image.url }}" alt="post_image">
+					</div>
+				{% endfor %}
+			</div>
+		{% else %}
+			<div>
+				<h4>У вас пока нет записей</h4>
+			</div>
+		{% endif %}
 
-    </div>
+	</div>
 
 </div>
+<script src="/static/js/jquery.min.js"></script>
+<script>
+    $('#id_image').on('change', function (evt) {
+        $('#tracker_form').submit()
+    })
+</script>
 </body>
 </html>

@@ -1,58 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles/registration_page.css' %}">
-    <title>Регистрация MoodTracker</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'styles/registration_page.css' %}">
+	<title>Регистрация MoodTracker</title>
 </head>
 
 <body>
 <div class="container">
-    <img class="logo-header" src="{% static 'img/logo_moodtracker.svg' %}" alt="logo">
+	<img class="logo-header" src="{% static 'img/logo_moodtracker.svg' %}" alt="logo">
 
-    <form class="form reg-form">
-        <h2 style="margin: 40px 0">Регистрация</h2>
+	<form class="form reg-form" action="{% url 'registration' %}" method="post">
+		{% csrf_token %}
+		<h2 style="margin: 40px 0">Регистрация</h2>
+		{{ message|default_if_none:'' }}
+		{{ form.first_name.errors }}
+		<div class="input-group">
+			{{ form.first_name }}
+			<span class="floating-label">Имя</span>
+		</div>
 
-        <div class="input-group">
-            <input type="text" id="name" name="name" class="input-field" required spellcheck="false">
-            <span class="floating-label">Имя</span>
-        </div>
+		{{ form.last_name.errors }}
+		<div class="input-group">
+			{{ form.last_name }}
+			<span class="floating-label">Фамилия</span>
+		</div>
 
-        <div class="input-group">
-            <input type="text" id="surname" name="surname" class="input-field" required spellcheck="false">
-            <span class="floating-label">Фамилия</span>
-        </div>
+		{{ form.login.errors }}
+		<div class="input-group">
+			{{ form.login }}
+			<span class="floating-label">Логин</span>
+		</div>
 
-        <div class="input-group">
-            <input type="text" id="login" name="login" class="input-field" required spellcheck="false">
-            <span class="floating-label">Логин</span>
-        </div>
+		{{ form.password.errors }}
+		<div class="input-group">
+			{{ form.password }}
+			<span class="floating-label">Пароль</span>
+		</div>
 
-        <div class="input-group">
-            <input type="password" id="password" name="password" required spellcheck="false">
-            <span class="floating-label">Пароль</span>
-        </div>
+		{{ form.password_confirm.errors }}
+		<div class="input-group">
+			{{ form.password_confirm }}
+			<span class="floating-label">Подтвердите пароль</span>
+		</div>
 
-        <div class="input-group">
-            <input type="password" id="password-confirm" name="password-confirm" required spellcheck="false">
-            <span class="floating-label">Подтвердите пароль</span>
-        </div>
+		<button type="submit" class="button primary-button">Создать аккаунт</button>
 
-        <button type="submit" class="button primary-button">Создать аккаунт</button>
+		<div class="text-between-lines">
+			<hr>
+			<p class="minor-text" style="white-space: nowrap; margin: 20px">Уже есть аккаунт?</p>
+			<hr>
+		</div>
 
-        <div class="text-between-lines">
-            <hr>
-            <p class="minor-text" style="white-space: nowrap; margin: 20px">Уже есть аккаунт?</p>
-            <hr>
-        </div>
+		<a href="/" style="display: block; width: 100%">
+			<button type="button" class="secondary-button">Войти</button>
+		</a>
 
-        <a href="/" style="display: block; width: 100%">
-            <button type="button" class="secondary-button">Войти</button>
-        </a>
-
-    </form>
+	</form>
 </div>
 
 </body>

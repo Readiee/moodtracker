@@ -1,61 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    {% load static %}
-    <link rel="stylesheet" href="{% static '/styles/base.css' %}">
-    <title>MoodTracker - Опубликовать настроение</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
+	{% load static %}
+	<link rel="stylesheet" href="{% static '/styles/base.css' %}">
+	<title>MoodTracker - Опубликовать настроение</title>
 </head>
 <body>
 <header>
-    <div class="header-top">
-        <div class="logo">
-            <img class="logo-header svg-white" src="{% static 'img/logo_moodtracker_white.svg' %}" alt="logo">
-        </div>
-    </div>
-    <div class="header-bottom">
-        <nav>
-            <ul>
-                <li>
-                    <a href="/tracker" style="color: black">Трекер</a>
-                    <hr class="ref-underline">
-                </li>
-                <li><a href="/friends">Друзья</a></li>
-                <li><a href="/profile">Профиль</a></li>
-            </ul>
-        </nav>
-    </div>
+	<div class="header-top">
+		<div class="logo">
+			<img class="logo-header svg-white" src="{% static 'img/logo_moodtracker_white.svg' %}" alt="logo">
+		</div>
+	</div>
+	<div class="header-bottom">
+		<nav>
+			<ul>
+				<li>
+					<a href="{% url 'tracker' %}" style="color: black">Трекер</a>
+					<hr class="ref-underline">
+				</li>
+				<li><a href="{% url 'friends' %}">Друзья</a></li>
+				<li><a href="{% url 'profile' %}">Профиль</a></li>
+			</ul>
+		</nav>
+	</div>
 </header>
 
 <div class="container">
-    <div class="content-block">
-        <h2>Ваше настроение</h2>
-        <div class="post">
-            <div class="post-header space-between">
-                <div class="post-info-group">
-                    <img class="icon-smile" src="{% static 'img/smiles/fear_smile_black.svg' %}"
-                         alt="fear_smile_icon">
-                    <div class="left-aligned-text">
-                        <h4>Страх</h4>
-                        <p class="minor-text">14 апр 21:04</p>
-                    </div>
-                </div>
-                <button type="button" class="icon-button">
-                    <img class="icon" src="{% static 'img/cross_black.svg' %}"
-                         alt="remove_icon">
-                </button>
-            </div>
-            <img class="post-image" src="{% static 'img/smiles/fear_photo.png' %}" alt="post_image">
-        </div>
-        <button type="button" class="button primary-button">
-            <span>Опубликовать</span>
-        </button>
+	<div class="content-block">
+		<h2>Ваше настроение</h2>
+		<div class="post">
+			<div class="post-header space-between">
+				<div class="post-info-group">
+					<img class="icon-smile" src="{{ request.user.avatar.url }}"
+					     alt="fear_smile_icon">
+					<div class="left-aligned-text">
+						<h4>{{ tracker.mood }}</h4>
+						<p class="minor-text">{{ tracker.date_create }}</p>
+					</div>
+				</div>
+				<button type="button" class="icon-button">
+					<img class="icon" src="{% static 'img/cross_black.svg' %}"
+					     alt="remove_icon">
+				</button>
+			</div>
+			<img class="post-image" src="{{ tracker.image.url }}" alt="post_image">
+		</div>
+		<a href="{% url 'tracker' %}">
+			<button type="button" class="button primary-button">
+				<span>Опубликовать</span>
+			</button>
+		</a>
 
-        <a href="/tracker" style="display: block; width: 100%">
-            <button type="button" class="secondary-button">Отмена</button>
-        </a>
-    </div>
+		<a href="{% url 'delete_tracker' tracker.id %}" style="display: block; width: 100%">
+			<button type="button" class="secondary-button">Отмена</button>
+		</a>
+	</div>
 
 </div>
 </body>
