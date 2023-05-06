@@ -5,6 +5,8 @@ import datetime
 from .managers import UserManager
 import uuid
 from shortuuid.django_fields import ShortUUIDField
+from django.dispatch import receiver
+import os
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -48,3 +50,14 @@ class Friend(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friend')
+
+
+@receiver(models.signals.post_delete, sender=Tracker)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding `MediaFile` object is deleted.
+    """
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)

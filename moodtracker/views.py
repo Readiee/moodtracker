@@ -78,6 +78,7 @@ def post_publishing_view(request, id):
 def delete_tracker_view(request, id):
     try:
         tracker = Tracker.objects.get(id=id)
+        image = tracker.image
         tracker.delete()
     except Tracker.DoesNotExist:
         pass
