@@ -42,6 +42,11 @@ body {
   > *:not(:first-child) {
     margin-top: 50px;
   }
+
+  > * {
+    width: 100%;
+  }
+
 }
 
 .logo-header {
@@ -52,7 +57,7 @@ label {
   font-size: 12px;
 }
 
-button {
+.primary-button {
   max-width: @max-width;
   width: 100%;
   height: 56px;
@@ -69,6 +74,14 @@ button {
   font-size: @font-size;
   font-weight: 700;
   cursor: pointer;
+}
+
+.primary-button > *:not(:first-child) {
+  margin-left: 10px; //interval between block's items
+}
+
+button {
+  .primary-button
 }
 
 button > *:not(:first-child) {
@@ -281,6 +294,14 @@ nav {
 
   > ul:not(:first-child) {
     margin-top: 20px; //interval between list's items
+  }
+
+  > * {
+    width: 100%;
+  }
+
+  label {
+    width: 100%
   }
 }
 

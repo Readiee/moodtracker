@@ -31,29 +31,35 @@ body {
 .container > *:not(:first-child) {
   margin-top: 50px;
 }
+.container > * {
+  width: 100%;
+}
 .logo-header {
   width: 80px;
 }
 label {
   font-size: 12px;
 }
-div.button{
-max-width: 600px;
-width: 100%;
-height: 56px;
-display: flex;
-justify-content: center;
-align-items: center;
-text-align: center;
-padding: 10px 20px;
-border-radius: 5px;
-border: none;
-background-color: #1E1E1E;
-color: #fff;
-font-family: Montserrat;
-font-size: 14px;
-font-weight: 700;
-cursor: pointer;
+.primary-button {
+  max-width: 600px;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #1E1E1E;
+  color: #fff;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.primary-button > *:not(:first-child) {
+  margin-left: 10px;
 }
 button {
   max-width: 600px;
@@ -250,6 +256,12 @@ nav a:hover {
 }
 .content-block > ul:not(:first-child) {
   margin-top: 20px;
+}
+.content-block > * {
+  width: 100%;
+}
+.content-block label {
+  width: 100%;
 }
 .desc-centred {
   font-size: 14px;
